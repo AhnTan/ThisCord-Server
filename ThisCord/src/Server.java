@@ -35,7 +35,7 @@ public class Server extends JFrame{
 	}
 	private void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(600,300,400,400);
+		setBounds(600,300,400,400);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5,5,5,5));
 		setContentPane(contentPane);
@@ -58,7 +58,7 @@ public class Server extends JFrame{
 		Myaction action= new Myaction();
 		start.addActionListener(action);
 		
-		User u = new User("at","1234");
+		User u = new User("ahntan","1234");
 		uv.add(u);
 		User u1 = new User("shbaek","1234");
 		uv.add(u1);

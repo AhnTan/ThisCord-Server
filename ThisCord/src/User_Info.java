@@ -142,7 +142,7 @@ public class User_Info extends Thread {
 			for (int i = 0; i < user_vc.size(); i++) {
 				sendMsg += user_vc.get(i).ID + " ";
 			}
-			
+			//
 			
 		} else if (cmd[1].equals("create")) {
 	

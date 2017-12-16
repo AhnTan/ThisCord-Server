@@ -23,6 +23,7 @@ public class Server extends JFrame{
 	private Socket soc;
 	private Vector<User_Info> vc = new Vector<User_Info>(); // 사용자 소켓 정보
 	private Vector<User> uv = new Vector<User>(); // 사용자 를 담은 벡터
+	private RoomManager rm = new RoomManager();
 	
 	public static void main(String[] args) {
 		Server frame = new Server();
@@ -58,15 +59,15 @@ public class Server extends JFrame{
 		Myaction action= new Myaction();
 		start.addActionListener(action);
 		
-		User u = new User("ahntan","1234");
+		User u = new User("ahntan","1234","9001");
 		uv.add(u);
-		User u1 = new User("shbaek","1234");
+		User u1 = new User("shbaek","1234","9002");
 		uv.add(u1);
-		User u2 = new User("한경동","1234");
+		User u2 = new User("hkd","1234","9003");
 		uv.add(u2);
-		User u3 = new User("송정은","1234");
+		User u3 = new User("sje","1234","9004");
 		uv.add(u3);
-		User u4 = new User("안형우","1234");
+		User u4 = new User("jsr","1234","9005");
 		uv.add(u4);
 	}
 	
@@ -105,14 +106,14 @@ public class Server extends JFrame{
 					try {
 						System.out.println("server");
 						soc = socket.accept();
-						System.out.println("server");
-						textArea.setText("Client join !!\n");
+					
+						textArea.append("Client join !!\n");
 						
-						User_Info user = new User_Info(soc,vc,uv);
+						User_Info user = new User_Info(soc,vc,uv,rm);
+						
 						
 						vc.add(user);
 						user.start();
-						
 						
 					} catch (IOException e) {
 						textArea.append("Accept Error!!\n");

@@ -4,7 +4,14 @@
 public class User { 
 	String id;
 	String pwd;
+	String ip;
 	String port;
+	public void setIP(String ip) {
+		this.ip = ip;
+	}
+	public String getIP() {
+		return ip;
+	}
 	public String getId() {
 		return id;
 	}

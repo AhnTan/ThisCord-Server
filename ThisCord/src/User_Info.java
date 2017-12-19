@@ -47,7 +47,11 @@ public class User_Info extends Thread {
 			String[] ID_info = IDPW.split(" ");
 			this.ID = ID_info[0].trim();
 			this.PWD = ID_info[1].trim();
-
+			for(int i=0 ; i <user.size(); i++) {
+				if(this.ID.equals(user.get(i).id)) {
+					user.get(i).setIP(ID_info[2].trim()); // ip 를 set 해준다 
+				}
+			}
 			// 임의의 방
 			/*
 			 * if (flag == 0) { ChattingRoom newRoom = new ChattingRoom("첫날방", this.ID);
@@ -261,11 +265,11 @@ public class User_Info extends Thread {
 
 		} else if (cmd[1].equals("create")) {
 			try {
-			sendMsg += cmd[2]; // 방이름
+			sendMsg += cmd[2] ; // 방이름
 			}catch(Exception e) {
 				return;
 			}
-			ChattingRoom newRoom = new ChattingRoom(cmd[2], cmd[0]); // 방이름 , 사용자명
+			ChattingRoom newRoom = new ChattingRoom(cmd[2], cmd[0],cmd[3]); // 방이름 , 사용자명         바꾼코드
 			
 			rm.addRoom(newRoom);
 			System.out.println(sendMsg + " 보낸다");
@@ -279,7 +283,7 @@ public class User_Info extends Thread {
 				Vector<String> userv = rv.get(i).getUsers(); // 방 안의 유저 벡터
 				for (int j = 0; j < userv.size(); j++) { // 유저 수 만큼 돌면서
 					if (ID.equals(userv.get(j))) { // 가져온다
-						sendMsg += rv.get(i).getRoomName() + " ";
+						sendMsg += rv.get(i).getRoomName() + " " + rv.get(i).getRoomNum()+" "; // 바꾼 코드
 					}
 				}
 			}
@@ -295,9 +299,27 @@ public class User_Info extends Thread {
 					Vector<Chatting> cv=rv.get(i).getChatList(); // 채팅리스트를 가지고 온다
 					for(int j=0;j<cv.size(); j++) {
 						
-						sendMsg ="#message%3"+ cv.get(j).getUser() + "%3" +cv.get(j).getTime() +"%3"+cv.get(i).getRoom()+"%3"+cv.get(j).getMessage();
+						sendMsg ="#message%3"+ cv.get(j).getUser() + "%3" +cv.get(j).getTime() +"%3"+cv.get(j).getRoom()+"%3"+cv.get(j).getMessage();
 					    send_Message(sendMsg);
 					}
+					String sendList="";
+					Vector<String> users = rv.get(i).getUsers(); // 방의 유저 목록을 가져온다
+					for(int k = 0 ; k < user.size(); k ++) {
+						for(int p=0 ; p < users.size(); p++) {
+							if(user.get(k).id.equals(users.get(p))) {
+								sendList += user.get(k).getId() +"%3" + user.get(k).getIP() +"%3" +user.get(k).getPort()+"%3";
+							}
+						}
+					}
+					String sendMsg2 ="#userlist%3"+sendList;
+					ChattingRoom check = null;
+					Vector<ChattingRoom> cr = rm.getRoom();
+					for (int q = 0; q < cr.size(); q++) {
+						if (cmd[2].equals(cr.get(q).getRoomName())) {
+							check = cr.get(q);
+						}
+					}
+					send_BroadMsg(sendMsg2, check);
 				}
 			}
 			return;
